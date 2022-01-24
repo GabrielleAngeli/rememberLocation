@@ -105,6 +105,7 @@ class RemindersActivityTest :
         onView(ViewMatchers.withId(com.udacity.project4.R.id.addReminderFAB)).perform(ViewActions.click())
         onView(isRoot()).perform(waitFor(5000))
         onView(ViewMatchers.withId(com.udacity.project4.R.id.saveReminder)).perform(ViewActions.click())
+        onView(withId(com.google.android.material.R.id.snackbar_text)).check(matches(withText("Please enter title")))
         activityScenario.close()
     }
 
@@ -131,6 +132,11 @@ class RemindersActivityTest :
         onView(ViewMatchers.withId(com.udacity.project4.R.id.addReminderFAB)).perform(ViewActions.click())
         onView(isRoot()).perform(waitFor(5000))
         onView(withId(com.udacity.project4.R.id.saveReminder)).perform(ViewActions.click())
+        onView(withId(com.google.android.material.R.id.snackbar_text)).check(
+            ViewAssertions.matches(
+                ViewMatchers.withText("Please enter title")
+            )
+        )
         onView(ViewMatchers.withId(com.udacity.project4.R.id.reminderTitle)).perform(
             ViewActions.typeText(
                 "Test"
@@ -139,6 +145,11 @@ class RemindersActivityTest :
         onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard())
         onView(isRoot()).perform(waitFor(8000))
         onView(withId(com.udacity.project4.R.id.saveReminder)).perform(ViewActions.click())
+        onView(withId(com.google.android.material.R.id.snackbar_text)).check(
+            ViewAssertions.matches(
+                ViewMatchers.withText("Please select location")
+            )
+        )
         activityScenario.close()
     }
 
