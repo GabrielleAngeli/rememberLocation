@@ -122,6 +122,10 @@ class RemindersActivityTest :
         onView(isRoot()).perform(waitFor(2000))
         onView(ViewMatchers.withId(com.udacity.project4.R.id.saveReminder)).perform(ViewActions.click())
         onView(isRoot()).perform(waitFor(2000))
+        onView(withId(R.id.saveReminder)).perform(ViewActions.click())
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+            .check(ViewAssertions.matches(withText(R.string.err_select_location)))
         activityScenario.close()
     }
 
