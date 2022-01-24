@@ -49,9 +49,13 @@ class SaveReminderViewModel(val app: Application, val dataSource: ReminderDataSo
     /**
      * Save the reminder to the data source
      */
-    private fun saveReminder(reminderData: ReminderDataItem) {
+    fun saveReminder(reminderData: ReminderDataItem) {
         showLoading.value = true
+
+//        viewModelScope is a predefined CoroutineScope that is included with the ViewModel KTX extensions. Note that all coroutines must run in a scope. A CoroutineScope manages one or more related coroutines.
+//        launch is a function that creates a coroutine and dispatches the execution of its function body to the corresponding dispatcher.
         viewModelScope.launch {
+            //Interface ReminderDataSource is implemented in RemindersLocalRepository
             dataSource.saveReminder(
                 ReminderDTO(
                     reminderData.title,
@@ -63,10 +67,9 @@ class SaveReminderViewModel(val app: Application, val dataSource: ReminderDataSo
                 )
             )
             showLoading.value = false
-            showToast.value = app.getString(R.string.reminder_saved)
-            //navigationCommand.value = NavigationCommand.Back
         }
     }
+
     fun refresh() {
         showLoading.value = true
         viewModelScope.launch {

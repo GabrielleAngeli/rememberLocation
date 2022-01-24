@@ -35,6 +35,8 @@
     <string name="err_select_location">Please select location</string>
     <string name="geofences_not_removed">Geofences not removed.</string>
     <string name="geofences_removed">Geofences removed.</string>
+    <string name="choose_a_place">Please choose a place</string>
+    <string name="geofence_added">Geofence added</string>
 
     <!-- Error strings -->
     <string name="geofence_unknown_error">Unknown error: the Geofence service is not available now.</string>
