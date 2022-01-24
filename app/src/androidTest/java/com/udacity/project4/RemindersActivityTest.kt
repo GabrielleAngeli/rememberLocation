@@ -1,5 +1,6 @@
 package com.udacity.project4
 
+import android.app.Activity
 import android.app.Application
 import android.view.View
 import androidx.test.core.app.ActivityScenario
@@ -27,6 +28,7 @@ import com.udacity.project4.util.DataBindingIdlingResource
 import com.udacity.project4.util.monitorActivity
 import com.udacity.project4.utils.EspressoIdlingResource
 import kotlinx.android.synthetic.main.activity_reminders.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.not
@@ -42,6 +44,15 @@ import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.koin.test.AutoCloseKoinTest
 import org.koin.test.get
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+
+import android.R
+import androidx.test.espresso.Espresso
+
+import androidx.test.espresso.Espresso.onView
+
+
+
 
 
 @RunWith(AndroidJUnit4::class)
@@ -120,14 +131,29 @@ class RemindersActivityTest :
         onView(isRoot()).perform(waitFor(5000))
         onView(ViewMatchers.withId(com.udacity.project4.R.id.proceed)).perform(ViewActions.click())
         onView(isRoot()).perform(waitFor(2000))
+        onView(withText("Reminder Location"))
+            .inRoot(ToastMatcher().apply {
+                matches(isDisplayed())
+            })
         onView(ViewMatchers.withId(com.udacity.project4.R.id.saveReminder)).perform(ViewActions.click())
         onView(isRoot()).perform(waitFor(2000))
-        onView(withId(R.id.saveReminder)).perform(ViewActions.click())
 
-        onView(withId(com.google.android.material.R.id.snackbar_text))
-            .check(ViewAssertions.matches(withText(R.string.err_select_location)))
+//        onView(withText(R.string.reminder_location)).inRoot(ToastMatcher())
+//            .check(matches(isDisplayed()))
+//        onView(withId(com.google.android.material.R.id.snackbar_text))
+//            .check(ViewAssertions.matches(withText(R.string.err_select_location)))
         activityScenario.close()
     }
+
+    // get activity context
+    private fun getActivity(activityScenario: ActivityScenario<RemindersActivity>): Activity? {
+        var activity: Activity? = null
+        activityScenario.onActivity {
+            activity = it
+        }
+        return activity
+    }
+
 
     @Test
     fun shouldReturnError() {
